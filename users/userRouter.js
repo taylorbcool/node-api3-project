@@ -1,5 +1,6 @@
 const express = require('express');
 const Users = require('./userDb');
+const Posts = require('../posts/postDb');
 
 
 const router = express.Router();
@@ -115,17 +116,25 @@ function validateUserId(req, res, next) {
 
 function validateUser(req, res, next) {
   // do your magic!
-  if (!req.body) {
-    res.status(400).json({ errorMessage: "missing user data" })
-      } else if (!req.body.name) {
-          res.status(400).json({ errorMessage: 'missing required name field' })
-        } else {
-          next();
-        }
+  const body = req.body
+    if (Object.keys(body).length === 0) {
+        res.status(400).json({ message: 'Missing user data.' })
+    } else if (!body.name) {
+        res.status(400).json({ message: 'Missing required name field.' })
+    } else {
+        next();
+    }
 }
 
 function validatePost(req, res, next) {
   // do your magic!
+  if (!req.body) {
+    res.status(400).json({ errorMessage: "missing post body" })
+  } else if (!req.body > 0) {
+      res.status(400).json({ errorMessage: "missing required text field" })
+    } else {
+        next();
+      }
 }
 
 module.exports = router;
