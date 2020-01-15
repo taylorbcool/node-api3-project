@@ -34,10 +34,21 @@ router.put('/:id', (req, res) => {
 
 function validateUserId(req, res, next) {
   // do your magic!
+  const id = req.body.id
+  if (id) {
+    
+  }
 }
 
 function validateUser(req, res, next) {
   // do your magic!
+  if (!req.body) {
+    res.status(400).json({ errorMessage: "missing user data" })
+      } else if (!req.body.name) {
+          res.status(400).json({ errorMessage: 'missing required name field' })
+        } else {
+          next();
+        }
 }
 
 function validatePost(req, res, next) {
